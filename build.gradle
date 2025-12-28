@@ -17,10 +17,19 @@ repositories {
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21-R0.1-SNAPSHOT")
 
+    //H2 (default db provider)
+    //implementation 'com.h2database:h2:2.4.240'
     // SQLite https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc
     //implementation 'org.xerial:sqlite-jdbc:3.51.1.0'
     //MariaDB
     //https://mariadb.com/docs/connectors/mariadb-connector-j/about-mariadb-connector-j
+
+    //Lombok my ♥
+    compileOnly("org.projectlombok:lombok:1.18.42")
+    annotationProcessor("org.projectlombok:lombok:1.18.42")
+
+    testCompileOnly("org.projectlombok:lombok:1.18.42")
+    testAnnotationProcessor("org.projectlombok:lombok:1.18.42")
 }
 
 tasks {

@@ -1,10 +1,44 @@
 name: teams
 version: '1.0.0'
-main: io.matita08.plugins.teams.Teams
+main: io.matita08.plugins.teams.TeamsPlugin
 api-version: '1.21'
 prefix: prefix
 load: STARTUP
 authors: [ matita08 ]
 description: A minecraft plugin
 
+libraries:
+  - org.xerial:sqlite-jdbc:3.51.1.0
+  - com.h2database:h2:2.4.240
 
+commands:
+  - team:
+      aliases:
+       - t
+      permission: teams.use
+
+permissions:
+  teams.*:
+    default: op
+    children:
+      teams.admin: true
+      teams.user: true
+
+
+  teams.user:
+    default: true
+    children:
+      teams.create: true
+      teams.use: true
+  teams.admin:
+    default: op
+    children:
+      teams.user: true
+      teams.delete: true
+
+  teams.create:
+    default: true
+    description: Allow the ability to create a team
+  teams.use:
+    default: true
+    description: Allow the use of the plugin

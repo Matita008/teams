@@ -1,0 +1,17 @@
+#Do not touch me
+_version: 1
+
+db:
+  #Allowed values: H2, MariaDB, SQLite
+  provider: H2
+  #Database credential
+  username: root
+  password: root
+  #defaults: localhost (127.0.0.1 for nerds)
+  url: localhost
+  #leave blank (or put it <1) to use the default port
+  port: 0
+  #Database name
+  name: main
+  #The prefix to add to each table name
+  prefix: teams_
