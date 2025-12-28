@@ -1,0 +1,10 @@
+name: teams
+version: '1.0.0'
+main: io.matita08.plugins.teams.Teams
+api-version: '1.21'
+prefix: prefix
+load: STARTUP
+authors: [ matita08 ]
+description: A minecraft plugin
+
+
