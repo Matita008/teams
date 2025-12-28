@@ -12,7 +12,7 @@ libraries:
   - com.h2database:h2:2.4.240
 
 commands:
-  - team:
+  team:
       aliases:
        - t
       permission: teams.use
@@ -23,7 +23,6 @@ permissions:
     children:
       teams.admin: true
       teams.user: true
-
 
   teams.user:
     default: true
