@@ -32,3 +32,6 @@ replay_pid*
 #gradle cache?
 .gradle/
 #iHateMyselfForThisEveryTime
+
+#fix gradle being dum and removing itself
+!gradle/wrapper/gradle-wrapper.jar
