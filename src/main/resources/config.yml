@@ -1,6 +1,7 @@
 #Do not touch me
 _version: 1
 
+#H2 is a special db since it does not rely on a server, but on a single file
 db:
   #Allowed values: H2, MariaDB, SQLite
   provider: H2
@@ -15,3 +16,13 @@ db:
   name: main
   #The prefix to add to each table name
   prefix: teams_
+
+name:
+  block:
+    - "fuck"
+    - "sex"
+    - "banned"
+    - "block"
+    - "blocca"
+    #To prevent SQL injections
+    - "'"

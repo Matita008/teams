@@ -2,7 +2,7 @@ name: teams
 version: '1.0.0'
 main: io.matita08.plugins.teams.TeamsPlugin
 api-version: '1.21'
-prefix: prefix
+prefix: teams
 load: STARTUP
 authors: [ matita08 ]
 description: A minecraft plugin
@@ -41,3 +41,6 @@ permissions:
   teams.use:
     default: true
     description: Allow the use of the plugin
+  teams.spy:
+    default: false
+    description: Allow the use of the spy subcommand

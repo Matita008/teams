@@ -13,9 +13,9 @@ on:
     paths:
       - '**.java'
 
+
 jobs:
   qodana:
-    #settalo furbo
     if: false
     runs-on: ubuntu-latest
     permissions:
