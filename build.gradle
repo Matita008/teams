@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'io.matita08.plugins'
-version = '1.0.0'
+version = '1.0.1-beta'
 
 repositories {
     mavenCentral()

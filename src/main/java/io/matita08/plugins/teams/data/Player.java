@@ -27,17 +27,20 @@ public class Player {
    
    public static Player load(String uuid) { return load(uuid, null); }
    
-   public static Player getPlayer(org.bukkit.entity.Player player) {
-      return players.parallelStream().filter(p -> p.getPlayer().equals(player)).findFirst().orElse(null);
+   public static Player getPlayer(String uuid) {
+      return loadPlayer(Bukkit.getPlayer(UUID.fromString(uuid)));
+   }
+   
+   public static Optional<Player> getPlayer(org.bukkit.entity.Player player) {
+      return players.parallelStream().filter(p -> p.getPlayer().equals(player)).findFirst();
    }
    
    public static Player loadPlayer(org.bukkit.entity.Player player) {
-      Player p = getPlayer(player);
-      return p == null? StorageManager.getInstance().loadPlayer(player.getUniqueId().toString()) : p;
+      return getPlayer(player).orElseGet(() -> StorageManager.getInstance().loadPlayer(player.getUniqueId().toString()));
    }
    
    public static void unloadPlayer(org.bukkit.entity.Player p) {
-      Player player = getPlayer(p);
+      Player player = getPlayer(p).orElse(null);
       if(player == null) return;
       
       if(player.team == null) {

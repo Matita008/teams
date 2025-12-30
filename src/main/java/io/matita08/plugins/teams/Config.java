@@ -12,6 +12,7 @@ import java.util.regex.PatternSyntaxException;
 public class Config {
    @Getter private static String tablePrefix;
    @Getter private static List<Pattern> nameBlacklist;
+   @Getter private static int maxPlayer;
    
    public static void init(YamlConfiguration config) {
       tablePrefix = config.getString("db.prefix", "teams_");
@@ -26,5 +27,7 @@ public class Config {
             TeamsPlugin.getLog().warning("Invalid blacklist pattern found: " + s + ", skipping...");
          }
       });
+      
+      maxPlayer = Math.min(config.getInt("teams.max-player", 20), 2);
    }
 }

@@ -4,6 +4,7 @@ import io.matita08.plugins.teams.TeamsPlugin;
 import io.matita08.plugins.teams.services.Service;
 import io.matita08.plugins.teams.storage.StorageManager;
 import lombok.*;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
 import java.util.*;
@@ -16,7 +17,8 @@ public class Team{
    @Getter private final List<Player> members = new ArrayList<>();
    @Getter private final Set<String> ally = new HashSet<>();
    @Getter private final Set<String> enemy = new HashSet<>();
-   int online = 0;
+   @Getter private final Player owner;
+   public int online = 0;
    
    public static boolean existTeam(String name) {
       if(name == null || name.isBlank() || teams.containsKey(name.strip())) return true;
@@ -28,23 +30,23 @@ public class Team{
       if(name.length() > 60) return null;
       if(existTeam(name)) return null;
       
-      Team team = new Team(name);
+      Team team = new Team(name,  creator);
       team.addMember(creator);
       teams.put(name, team);
       return team;
    }
    
-   public static void deleteTeam(String team) {
-      if(!existTeam(team)) return;
-      Team teamToDelete = teams.get(team);
-      teamToDelete.members.forEach(member -> member.setTeam(null));
-      teams.remove(team);
+   public void deleteTeam() {
+      this.members.forEach(member -> member.setTeam(null));
+      Bukkit.getScheduler().runTaskAsynchronously(TeamsPlugin.getInstance(), () -> StorageManager.getInstance().deleteTeam(name));
+      teams.remove(name);
    }
    
-   public static Team loadTeam(String teamName) {
+   public static Team loadTeam(String teamName, Player creator) {
       if(teamName == null || teamName.isBlank()) return null;
-      Team t = new Team(teamName);
+      Team t = new Team(teamName, creator);
       teams.put(teamName, t);
+      creator.setTeam(t);
       return t;
    }
    
@@ -86,6 +88,7 @@ public class Team{
       return enemy.contains(teamName);
    }
    
+   @SuppressWarnings("deprecation")
    public void broadcast(String message) {
       for(Player player : members) {
          if(player.isOnline()) player.getPlayer().sendMessage(ChatColor.BLUE + "[Team chat] " + ChatColor.RESET + message);

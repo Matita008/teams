@@ -7,6 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
+@SuppressWarnings("deprecation")//idc
 public class ChatListener implements Listener {
    @EventHandler
    public void onChat(AsyncPlayerChatEvent event){

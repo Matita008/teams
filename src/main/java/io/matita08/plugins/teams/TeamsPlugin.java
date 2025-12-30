@@ -1,5 +1,6 @@
 package io.matita08.plugins.teams;
 
+import com.google.common.base.Verify;
 import io.matita08.plugins.teams.commands.TeamCommand;
 import io.matita08.plugins.teams.listeners.CacheManager;
 import io.matita08.plugins.teams.listeners.ChatListener;
@@ -57,6 +58,6 @@ public final class TeamsPlugin extends JavaPlugin {
    }
    
    private void loadCommands() {
-      getCommand("team").setExecutor(new TeamCommand());
+      Verify.verifyNotNull(getCommand("team")).setExecutor(new TeamCommand());
    }
 }

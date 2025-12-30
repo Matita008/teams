@@ -26,3 +26,7 @@ name:
     - "blocca"
     #To prevent SQL injections
     - "'"
+teams:
+  #Maxium players a team can have. Must be >2
+  #Default 20
+  max-player: 25
