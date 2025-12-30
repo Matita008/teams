@@ -40,6 +40,7 @@ public class Team{
       this.members.forEach(member -> member.setTeam(null));
       Bukkit.getScheduler().runTaskAsynchronously(TeamsPlugin.getInstance(), () -> StorageManager.getInstance().deleteTeam(name));
       teams.remove(name);
+      owner.setTeam(null);
    }
    
    public static Team loadTeam(String teamName, Player creator) {
