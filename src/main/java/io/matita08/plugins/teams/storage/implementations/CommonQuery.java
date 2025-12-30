@@ -26,7 +26,7 @@ public record CommonQuery(String query) {
    public static final CommonQuery DELETE_TEAM = q(DELETE, "teams", "name = '%s'");
    public static final CommonQuery DELETE_PLAYER_TEAM = q(UPDATE, "players", "team = NULL", "team = ?");
    public static final CommonQuery LOAD_PLAYER = q(SELECT, "team", "players", "uuid = ?");
-   public static final CommonQuery GET_TEAM_OWNER = q(SELECT, "owner", "teams", "team = ?");
+   public static final CommonQuery GET_TEAM_OWNER = q(SELECT, "owner", "teams", "name = ?");
    public static final CommonQuery INSERT_PLAYER = q(INSERT, "players", "uuid, team", "?, ?");
    public static final CommonQuery UPDATE_PLAYER = q(UPDATE, "players", "team = ?", "uuid = ?");
    public static final CommonQuery INSERT_TEAM = q(INSERT, "teams", "name, owner", "?, ?");

@@ -3,6 +3,7 @@ package io.matita08.plugins.teams.commands;
 import io.matita08.plugins.teams.Config;
 import io.matita08.plugins.teams.TeamsPlugin;
 import io.matita08.plugins.teams.data.Team;
+import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -60,19 +61,15 @@ public class TeamCommand implements CommandExecutor {
    }
    private static boolean team(CommandSender sender, String[] args) {
       if(args.length == 1) return false;
-      String pname = args[1];
-      
-      io.matita08.plugins.teams.data.Player p = loadPlayer(Bukkit.getPlayer(pname));
-      sender.sendMessage("Il giocatore " + p.getPlayer().getName() + (p.getTeam() == null ? " non è in nessun team" : "è nel team" + p.getTeam().getName()));
       
       Team team = getTeam(sender, args);
       if(team == null) return true;
       
       sender.sendMessage(ChatColor.GOLD + "---------- Team info ---------");
       sender.sendMessage(ChatColor.BLUE + "Nome: " + team.getName());
-      sender.sendMessage(ChatColor.AQUA + "Owner: " + team.getOwner().getPlayer().name());
+      sender.sendMessage(ChatColor.AQUA + "Owner: " + ((TextComponent) team.getOwner().getPlayer().name()).content());
       sender.sendMessage(ChatColor.GREEN + "Membri: ");
-      team.getMembers().forEach(pl -> sender.sendMessage(ChatColor.YELLOW + "  - " + pl.getPlayer().name()));
+      team.getMembers().forEach(pl -> sender.sendMessage(ChatColor.YELLOW + "  - " + ((TextComponent) pl.getPlayer().name()).content()));
       sender.sendMessage(ChatColor.GREEN + "Alleati: ");
       team.getAlly().forEach(t -> sender.sendMessage(ChatColor.DARK_AQUA + "  - " + t));
       sender.sendMessage(ChatColor.LIGHT_PURPLE + "Nemici: ");
@@ -85,7 +82,7 @@ public class TeamCommand implements CommandExecutor {
    private static boolean info(CommandSender sender, String[] args) {
       io.matita08.plugins.teams.data.Player player = getPlayer(Bukkit.getPlayer(args[1])).orElse(null);
       if(player == null) {
-         sender.sendMessage(ChatColor.RED + "Giocatore non trovato!");
+         sender.sendMessage(ChatColor.RED + "Giocatore non trovato o offline!");
          return true;
       }
       sender.sendMessage("Il giocatore " + args[1] + (player.getTeam() == null? " non è in nessun team" : " è nel team " + player.getTeam().getName()));

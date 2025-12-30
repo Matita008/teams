@@ -18,7 +18,6 @@ public abstract class Database implements Storage {
    protected PreparedStatement getOwnerStmt;
    protected PreparedStatement insertTeamStmt;
    protected PreparedStatement checkTeamStmt;
-   protected PreparedStatement deleteTeamStmt;
    protected PreparedStatement clearPlayerTeamStmt;
    protected PreparedStatement getPlayersStmt;
    protected PreparedStatement loadAllyStmt;
@@ -35,10 +34,11 @@ public abstract class Database implements Storage {
    public Player loadPlayer(String id) {
       loadPlayerStmt.setString(1, id);
       ResultSet rs = loadPlayerStmt.executeQuery();
+      Player p = Player.load(id);
       if(rs.next()) {
-         return Player.load(id, Team.getTeam(rs.getString("team")));
+         p.setTeam(Team.getTeam(rs.getString("team")));
       }
-      return Player.load(id);
+      return p;
    }
    
    @Override
@@ -143,8 +143,9 @@ public abstract class Database implements Storage {
       deleteEnemyStmt2.setString(1, name);
       deleteEnemyStmt2.executeUpdate();
       
-      deleteTeamStmt.setString(1, name);
-      deleteTeamStmt.executeUpdate();
+      @Cleanup
+      Statement stmt = getConnection().createStatement();
+      stmt.execute(CommonQuery.DELETE_TEAM.format(name.replace('\'', ' ')));
       
       clearPlayerTeamStmt.setString(1, name);
       clearPlayerTeamStmt.executeUpdate();
@@ -169,7 +170,6 @@ public abstract class Database implements Storage {
       getOwnerStmt = CommonQuery.GET_TEAM_OWNER.get(getConnection());
       insertTeamStmt = CommonQuery.INSERT_TEAM.get(getConnection());
       checkTeamStmt = CommonQuery.CHECK_TEAM.get(getConnection());
-      deleteTeamStmt = CommonQuery.DELETE_TEAM.get(getConnection());
       clearPlayerTeamStmt = CommonQuery.DELETE_PLAYER_TEAM.get(getConnection());
       
       loadAllyStmt = getConnection().prepareStatement(CommonQuery.LOAD_RELATION.format("ally"));
@@ -187,7 +187,7 @@ public abstract class Database implements Storage {
    @Override
    public void unload() {
       close(insertPlayerStmt, updatePlayerStmt, loadPlayerStmt, checkPlayerStmt, insertTeamStmt, checkTeamStmt);
-      close(deleteTeamStmt, clearPlayerTeamStmt, loadAllyStmt, loadEnemyStmt, deleteAllyStmt, deleteAllyStmt2);
+      close(clearPlayerTeamStmt, loadAllyStmt, loadEnemyStmt, deleteAllyStmt, deleteAllyStmt2);
       close(deleteEnemyStmt, deleteEnemyStmt2, insertAllyStmt, insertEnemyStmt, getOwnerStmt);
    }
    
