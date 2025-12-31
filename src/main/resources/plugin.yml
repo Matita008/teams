@@ -9,14 +9,15 @@ description: A minecraft plugin
 
 # noinspection SpellCheckingInspection
 libraries:
-  - org.xerial:sqlite-jdbc:3.51.1.0
   - com.h2database:h2:2.4.240
+  - org.xerial:sqlite-jdbc:3.51.1.0
+  - org.mariadb.jdbc:mariadb-java-client:3.3.2
 
 commands:
   team:
-      aliases:
-       - t
-      permission: teams.use
+    aliases:
+      - t
+    permission: teams.use
 
 permissions:
   teams.*:

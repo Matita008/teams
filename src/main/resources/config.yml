@@ -7,7 +7,7 @@ db:
   provider: H2
   #Database credential
   username: root
-  password: root
+  password:
   #defaults: localhost (127.0.0.1 for nerds)
   url: localhost
   #leave blank (or put it <1) to use the default port
@@ -16,6 +16,10 @@ db:
   name: main
   #The prefix to add to each table name
   prefix: teams_
+  #Used only by SQLite
+  online: false
+  #Used for local databases
+  path: db/teams.db
 
 name:
   block:
