@@ -2,15 +2,14 @@ package io.matita08.plugins.teams.commands;
 
 import io.matita08.plugins.teams.Config;
 import io.matita08.plugins.teams.TeamsPlugin;
+import io.matita08.plugins.teams.Utils;
 import io.matita08.plugins.teams.data.Team;
-import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -23,7 +22,7 @@ import static io.matita08.plugins.teams.data.Team.createTeam;
 @SuppressWarnings({"deprecation", "SameReturnValue"})//ChatColor is deprecated, idc. This stops the yellow spam
 public class TeamCommand implements CommandExecutor {
    @Override
-   public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
       if(args.length == 0) return help(sender);
       return switch(args[0]) {
          case "help" -> help(sender);
@@ -67,9 +66,9 @@ public class TeamCommand implements CommandExecutor {
       
       sender.sendMessage(ChatColor.GOLD + "---------- Team info ---------");
       sender.sendMessage(ChatColor.BLUE + "Nome: " + team.getName());
-      sender.sendMessage(ChatColor.AQUA + "Owner: " + ((TextComponent) team.getOwner().getPlayer().name()).content());
+      sender.sendMessage(ChatColor.AQUA + "Owner: " + team.getOwner().getPlayer().getName());
       sender.sendMessage(ChatColor.GREEN + "Membri: ");
-      team.getMembers().forEach(pl -> sender.sendMessage(ChatColor.YELLOW + "  - " + ((TextComponent) pl.getPlayer().name()).content()));
+      team.getMembers().forEach(pl -> sender.sendMessage(ChatColor.YELLOW + "  - " + Utils.getPlayerName(pl.getPlayer())));
       sender.sendMessage(ChatColor.GREEN + "Alleati: ");
       team.getAlly().forEach(t -> sender.sendMessage(ChatColor.DARK_AQUA + "  - " + t));
       sender.sendMessage(ChatColor.LIGHT_PURPLE + "Nemici: ");
@@ -114,7 +113,7 @@ public class TeamCommand implements CommandExecutor {
          });
       } catch (RuntimeException e) {
          sender.sendMessage(ChatColor.RED + "Nome non valido");
-         TeamsPlugin.getLog().info(player.name() + "(" + player.getUniqueId() + ") has tried to create a team called " + name);
+         TeamsPlugin.getLog().info(Utils.getPlayerName(player) + "(" + player.getUniqueId() + ") has tried to create a team called " + name);
          return true;
       }
       
